@@ -10,7 +10,7 @@ import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar = () => {
 
-     const isLoggedIn = true;
+     const isLoggedIn = false;
 
     const navLinks = isLoggedIn
         ? [
