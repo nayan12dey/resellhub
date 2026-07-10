@@ -12,7 +12,7 @@ const Banner = () => {
   const slides = [
     "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000",
     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000",
-    "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1000",
+    "https://images.unsplash.com/photo-1675546529290-a2147e6e5cd5?q=80&w=1000",
   ];
 
   useEffect(() => {
