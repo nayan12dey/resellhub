@@ -5,6 +5,7 @@ const products = [
   {
     id: "1",
     title: "iPhone 14 Pro",
+    description: "Excellent condition with original box and charger included.",
     price: 65000,
     location: "Kolkata",
     image:
@@ -13,6 +14,7 @@ const products = [
   {
     id: "2",
     title: "Gaming Laptop",
+    description: "High-performance laptop, perfect for gaming and editing.",
     price: 58000,
     location: "Delhi",
     image:
@@ -21,6 +23,7 @@ const products = [
   {
     id: "3",
     title: "Mountain Bike",
+    description: "Well-maintained mountain bike for adventure rides.",
     price: 12000,
     location: "Mumbai",
     image:
@@ -29,6 +32,7 @@ const products = [
   {
     id: "4",
     title: "Wooden Table",
+    description: "Premium solid wood table with modern design.",
     price: 3500,
     location: "Bangalore",
     image:
@@ -44,6 +48,7 @@ const ProductGrid = () => {
           key={item.id}
           id={item.id}
           title={item.title}
+          description={item.description}
           price={item.price}
           location={item.location}
           image={item.image}

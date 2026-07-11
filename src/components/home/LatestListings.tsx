@@ -8,6 +8,7 @@ const LatestListings = () => {
         {
             id: "1",
             title: "iPhone 14 Pro",
+            description: "Excellent condition with original box and charger included.",
             price: 65000,
             location: "Kolkata",
             condition: "Used",
@@ -18,6 +19,7 @@ const LatestListings = () => {
         {
             id: "2",
             title: "Gaming Laptop",
+            description: "High-performance laptop, perfect for gaming and editing.",
             price: 58000,
             location: "Delhi",
             condition: "Like New",
@@ -28,6 +30,7 @@ const LatestListings = () => {
         {
             id: "3",
             title: "Mountain Bike",
+            description: "Well-maintained mountain bike for adventure rides.",
             price: 12000,
             location: "Mumbai",
             condition: "Used",
@@ -38,6 +41,7 @@ const LatestListings = () => {
         {
             id: "4",
             title: "Wooden Table",
+            description: "Premium solid wood table with modern design.",
             price: 3500,
             location: "Bangalore",
             condition: "Excellent",
@@ -76,7 +80,7 @@ const LatestListings = () => {
                 </div>
 
                 {/* Product Cards Grid with smooth zoom/hover transitions */}
-            
+
                 <div className="grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
                     {products.map((item) => (
                         <div
@@ -86,6 +90,7 @@ const LatestListings = () => {
                             <ProductCard
                                 id={item.id}
                                 title={item.title}
+                                description={item.description}
                                 price={item.price}
                                 location={item.location}
                                 condition={item.condition}
