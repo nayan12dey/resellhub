@@ -45,9 +45,13 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
         }
     );
 
+    if (!res.ok) {
+        throw new Error("Failed to fetch product");
+    }
+
     const product = await res.json();
 
-    console.log(product)
+
 
     const specificationsData = [
         {
@@ -83,19 +87,19 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
                 {/* TOP SECTION: Gallery & Info Side-by-Side */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                     <div className="lg:col-span-5 w-full max-w-md mx-auto lg:mx-0 sticky top-6">
-                        <ProductGallery images={product.images} />
+                        <ProductGallery images={product.images ?? []} />
                     </div>
                     <div className="lg:col-span-7">
                         <ProductInfo
-                            title={product.title}
-                            category={product.category}
-                            price={product.price}
+                            title={product?.title}
+                            category={product?.category}
+                            price={product?.price}
                             // originalPrice={139900}
-                            description={product.description}
-                            condition={product.condition}
-                            location={product.location}
-                            postedDate={product.postedDate}
-                            seller={product.seller.name}
+                            description={product?.description}
+                            condition={product?.condition}
+                            location={product?.location}
+                            postedDate={product?.postedDate}
+                            seller={product?.seller?.name}
                         />
                     </div>
                 </div>
