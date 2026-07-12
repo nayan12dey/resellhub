@@ -96,7 +96,7 @@ const ProductCard = ({
 
                 {/* Button */}
                 <Link
-                    href={`/items/${id}`}
+                    href={`/products/${id}`}
                     className="mt-6 rounded-xl border border-gray-200 bg-gray-50 py-3 text-center text-sm font-semibold text-gray-700 transition-all duration-300 hover:border-blue-600 hover:bg-blue-600 hover:text-white"
                 >
                     View Details

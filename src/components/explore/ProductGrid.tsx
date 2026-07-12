@@ -43,6 +43,19 @@ const ProductGrid = () => {
     );
   }
 
+  if (products.length === 0) {
+    return (
+      <div className="py-20 text-center">
+        <h2 className="text-xl font-semibold text-slate-800">
+          No Products Found
+        </h2>
+        <p className="mt-2 text-slate-500">
+          There are no products available right now.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {products.map((item) => (
