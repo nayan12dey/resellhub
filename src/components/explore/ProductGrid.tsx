@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ProductCard from "../shared/ProductCard";
+import ProductSkeleton from "../shared/ProductSkeleton";
+import SkeletonGrid from "../shared/SkeletonGrid";
 
 interface Product {
   _id: string;
@@ -36,11 +38,7 @@ const ProductGrid = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="py-20 text-center text-gray-500">
-        Loading products...
-      </div>
-    );
+    return <SkeletonGrid count={12} />;
   }
 
   if (products.length === 0) {

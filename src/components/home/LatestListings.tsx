@@ -22,6 +22,7 @@ interface Product {
 }
 
 const LatestListings = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
    
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/products?limit=8`,
