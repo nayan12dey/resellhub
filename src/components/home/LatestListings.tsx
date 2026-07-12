@@ -3,53 +3,36 @@ import ProductCard from "../shared/ProductCard";
 import Container from "../shared/Container";
 import { FiArrowRight } from "react-icons/fi";
 
-const LatestListings = () => {
-    const products = [
+
+interface Product {
+    _id: string;
+    title: string;
+    description: string;
+    category: string;
+    price: number;
+    originalPrice: number;
+    condition: string;
+    location: string;
+    images: string[];
+    seller: {
+        name: string;
+        email: string;
+    };
+    postedDate: string;
+}
+
+const LatestListings = async () => {
+   
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products?limit=8`,
         {
-            id: "1",
-            title: "iPhone 14 Pro",
-            description: "Excellent condition with original box and charger included.",
-            price: 65000,
-            location: "Kolkata",
-            condition: "Used",
-            postedDate: "2 days ago",
-            image:
-                "https://images.unsplash.com/photo-1596558450268-9c27524ba856?q=80&w=1000",
-        },
-        {
-            id: "2",
-            title: "Gaming Laptop",
-            description: "High-performance laptop, perfect for gaming and editing.",
-            price: 58000,
-            location: "Delhi",
-            condition: "Like New",
-            postedDate: "5 days ago",
-            image:
-                "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1000",
-        },
-        {
-            id: "3",
-            title: "Mountain Bike",
-            description: "Well-maintained mountain bike for adventure rides.",
-            price: 12000,
-            location: "Mumbai",
-            condition: "Used",
-            postedDate: "1 week ago",
-            image:
-                "https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=1000",
-        },
-        {
-            id: "4",
-            title: "Wooden Table",
-            description: "Premium solid wood table with modern design.",
-            price: 3500,
-            location: "Bangalore",
-            condition: "Excellent",
-            postedDate: "Today",
-            image:
-                "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000",
-        },
-    ];
+            cache: "no-store",
+        }
+    );
+
+    const products: Product[] = await res.json();
+
+
 
     return (
         <section className="py-16 md:py-24 bg-gray-50/50">
@@ -84,17 +67,17 @@ const LatestListings = () => {
                 <div className="grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
                     {products.map((item) => (
                         <div
-                            key={item.id}
+                            key={item._id}
                             className="transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2.5 hover:shadow-2xl hover:shadow-blue-900/5 rounded-2xl"
                         >
                             <ProductCard
-                                id={item.id}
+                                id={item._id}
                                 title={item.title}
                                 description={item.description}
                                 price={item.price}
                                 location={item.location}
                                 condition={item.condition}
-                                image={item.image}
+                                image={item.images?.[0]}
                                 postedDate={item.postedDate}
                             />
                         </div>
