@@ -11,14 +11,15 @@ import {
     CartesianGrid,
 } from "recharts";
 import { ShoppingBag, Users, CheckCircle, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const chartData = [
-    { category: "Electronics", listings: 120 },
-    { category: "Fashion", listings: 95 },
-    { category: "Furniture", listings: 80 },
-    { category: "Vehicles", listings: 110 },
-    { category: "Books", listings: 60 },
-];
+// const chartData = [
+//     { category: "Electronics", listings: 120 },
+//     { category: "Fashion", listings: 95 },
+//     { category: "Furniture", listings: 80 },
+//     { category: "Vehicles", listings: 110 },
+//     { category: "Books", listings: 60 },
+// ];
 
 const stats = [
     {
@@ -55,7 +56,7 @@ const CustomTooltip = ({ active, payload }: any) => {
                     Category
                 </p>
                 <p className="text-base font-extrabold text-gray-900">
-                    {payload[0].payload.category}
+                    {payload[0].payload.name}
                 </p>
                 <div className="mt-2 flex items-center gap-2 border-t border-gray-50 pt-2">
                     <div className="h-2.5 w-2.5 rounded-full bg-blue-600" />
@@ -70,13 +71,32 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 const MarketplaceStatistics = () => {
+
+    const [chartData, setChartData] = useState([]);
+
+    useEffect(() => {
+        const fetchChart = async () => {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/statistics/chart`
+            );
+
+            const data = await res.json();
+
+            setChartData(data);
+        };
+
+        fetchChart();
+    }, []);
+
+
+
     return (
         <section className="relative overflow-hidden bg-slate-50 py-20 md:py-28">
-            
+
             <div className="absolute -right-40 top-0 h-[600px] w-[600px] rounded-full bg-blue-100/40 blur-3xl pointer-events-none z-0"></div>
             <div className="absolute -left-40 bottom-0 h-[600px] w-[600px] rounded-full bg-indigo-100/30 blur-3xl pointer-events-none z-0"></div>
 
-            
+
             <Container>
                 <div className="relative z-10">
                     {/* Section Heading */}
@@ -109,7 +129,7 @@ const MarketplaceStatistics = () => {
                                             {item.label}
                                         </p>
                                     </div>
-                                    
+
                                     <div className={`rounded-2xl p-4 border transition-transform duration-500 group-hover:scale-110 ${item.color}`}>
                                         <Icon size={24} className="stroke-[2.5]" />
                                     </div>
@@ -129,7 +149,7 @@ const MarketplaceStatistics = () => {
                                     Real-time item distribution across popular categories
                                 </p>
                             </div>
-                            
+
                             <div className="flex items-center gap-2 self-start sm:self-auto rounded-xl bg-slate-50 border border-slate-100 px-3 py-1.5 text-xs font-bold text-gray-600">
                                 <div className="h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse" />
                                 Total Items Listed
@@ -137,7 +157,7 @@ const MarketplaceStatistics = () => {
                         </div>
 
                         {/* Recharts Chart */}
-                        
+
                         <div className="h-[400px] w-full mt-4">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
@@ -145,25 +165,25 @@ const MarketplaceStatistics = () => {
                                     margin={{ top: 20, right: 10, left: -15, bottom: 10 }}
                                     barGap={0}
                                 >
-                                    
+
                                     <defs>
-                                      
+
                                         <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
                                             <stop offset="0%" stopColor="#2563eb" stopOpacity={1} />
                                             <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.2} />
                                         </linearGradient>
 
-                                        
+
                                         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                                             <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#2563eb" floodOpacity="0.15" />
                                         </filter>
                                     </defs>
 
-                                   
+
                                     <CartesianGrid strokeDasharray="6 6" stroke="#f1f5f9" vertical={false} />
 
                                     <XAxis
-                                        dataKey="category"
+                                        dataKey="name"
                                         axisLine={false}
                                         tickLine={false}
                                         tick={{ fill: '#64748b', fontSize: 13, fontWeight: 600 }}
@@ -177,22 +197,22 @@ const MarketplaceStatistics = () => {
                                         dx={-5}
                                     />
 
-                                    
+
                                     <Tooltip
                                         cursor={{ fill: '#f1f5f9', opacity: 0.5, radius: 16 }}
                                         content={<CustomTooltip />}
                                         animationDuration={300}
                                     />
 
-                                   
+
                                     <Bar
-                                        dataKey="listings"
-                                        radius={[16, 16, 4, 4]} 
-                                        fill="url(#barGradient)" 
+                                        dataKey="value"
+                                        radius={[16, 16, 4, 4]}
+                                        fill="url(#barGradient)"
                                         maxBarSize={45}
                                         animationDuration={1500}
                                         animationEasing="ease-out"
-                                        
+
                                         activeBar={{
                                             filter: "url(#glow)",
                                             stroke: "#2563eb",
