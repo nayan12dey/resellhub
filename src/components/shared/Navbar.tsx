@@ -7,10 +7,14 @@ import Logo from "./Logo";
 import Container from "./Container";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import ProfileDropdown from "./ProfileDropdown";
+import { authClient } from "@/app/lib/auth-client";
 
 const Navbar = () => {
 
-     const isLoggedIn = false;
+    const { data: session, isPending } = authClient.useSession();
+    const user = session?.user;
+
+     const isLoggedIn = user;
 
     const navLinks = isLoggedIn
         ? [
@@ -64,7 +68,7 @@ const Navbar = () => {
                         {/* Desktop Auth / Profile Conditional Rendering */}
                         <div className="hidden lg:flex items-center gap-4">
                             {isLoggedIn ? (
-                                <ProfileDropdown />
+                                <ProfileDropdown user={user} />
                             ) : (
                                 <>
                                     <Link
@@ -86,7 +90,7 @@ const Navbar = () => {
                         {/* Mobile-only Profile Dropdown (Hamburger-er bame thakbe look valo hobar jonno) */}
                         {isLoggedIn && (
                             <div className="lg:hidden flex items-center">
-                                <ProfileDropdown />
+                                <ProfileDropdown user={user} />
                             </div>
                         )}
 
