@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/app/lib/auth-client";
 import {
     FieldError,
     Form,
@@ -9,14 +10,18 @@ import {
     TextArea,
     TextField,
     Select,
-    ListBox
+    ListBox,
+    Button
 } from "@heroui/react";
+import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AddItemForm() {
 
     const [loading, setLoading] = useState(false);
+
+    const { data: session } = authClient.getSession();
 
     const [previewImages, setPreviewImages] = useState<string[]>([]);
 
@@ -131,15 +136,52 @@ export default function AddItemForm() {
 
                 imageUrls.push(result.data.url);
             }
-            console.log({
+            const productData = {
                 title,
                 description,
-                price: Number(price),
-                location,
                 category,
+                price: Number(price),
                 condition,
+                location,
                 images: imageUrls,
-            });
+
+                seller: {
+                    name: session?.user?.name,
+                    email: session?.user?.email,
+                },
+
+                postedDate: new Date().toISOString().split("T")[0],
+
+                status: "available",
+
+                createdAt: new Date(),
+
+                rating: 0,
+
+                reviews: 0,
+            };
+
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/products`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(productData),
+                }
+            );
+
+            const result = await response.json();
+
+            if (!result.success) {
+                throw new Error("Failed to add product");
+            }
+
+            toast.success("Product Added Successfully");
+
+            e.currentTarget.reset();
+            setPreviewImages([]);
 
         } catch (error) {
             console.error(error);
@@ -148,9 +190,6 @@ export default function AddItemForm() {
             setLoading(false);
         }
 
-
-
-        toast.success("Validation Successful");
     };
 
 
@@ -401,10 +440,13 @@ export default function AddItemForm() {
                                         className="relative h-36 overflow-hidden rounded-xl border border-slate-200"
                                     >
 
-                                        <img
+                                        <Image
                                             src={image}
                                             alt={`Preview ${index + 1}`}
-                                            className="h-full w-full object-cover"
+                                            fill
+                                            sizes="(max-width:768px) 50vw, 25vw"
+                                            className="object-cover"
+                                            unoptimized
                                         />
 
                                     </div>
@@ -423,6 +465,16 @@ export default function AddItemForm() {
                     )}
 
                 </div>
+
+                <Button
+                    type="submit"
+                    color="primary"
+                    radius="md"
+                    className="w-full h-12 text-base font-semibold"
+                    isLoading={loading}
+                >
+                    {loading ? "Adding Product..." : "Add Product"}
+                </Button>
 
             </Form>
 
