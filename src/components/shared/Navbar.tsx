@@ -20,8 +20,8 @@ const Navbar = () => {
         ? [
             { label: "Home", href: "/" },
             { label: "Explore", href: "/explore" },
-            { label: "Add Item", href: "/items/add" },
-            { label: "My Listings", href: "/items/manage" },
+            { label: "Add Item", href: "/add-item" },
+            { label: "My Listings", href: "/my-listings" },
             { label: "About", href: "/about" },
             { label: "Contact", href: "/contact" },
         ]

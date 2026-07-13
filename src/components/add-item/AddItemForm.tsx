@@ -1,0 +1,431 @@
+"use client";
+
+import {
+    FieldError,
+    Form,
+    Input,
+    Label,
+    Surface,
+    TextArea,
+    TextField,
+    Select,
+    ListBox
+} from "@heroui/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+export default function AddItemForm() {
+
+    const [loading, setLoading] = useState(false);
+
+    const [previewImages, setPreviewImages] = useState<string[]>([]);
+
+    const [errors, setErrors] = useState<{
+        title?: string;
+        description?: string;
+        price?: string;
+        location?: string;
+        category?: string;
+        condition?: string;
+        images?: string;
+    }>({});
+
+    const handleImageChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const files = Array.from(e.target.files || []);
+
+        if (files.length === 0) return;
+
+        if (files.length > 4) {
+            toast.error("Maximum 4 images allowed.");
+            return;
+        }
+
+        const previews = files.map((file) =>
+            URL.createObjectURL(file)
+        );
+
+        setPreviewImages(previews);
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        setErrors({});
+
+        const formData = new FormData(e.currentTarget);
+
+        const title = formData.get("title")?.toString().trim() || "";
+        const description =
+            formData.get("description")?.toString().trim() || "";
+        const price = formData.get("price")?.toString() || "";
+        const location = formData.get("location")?.toString().trim() || "";
+        const category = formData.get("category")?.toString() || "";
+        const condition = formData.get("condition")?.toString() || "";
+
+        const images = formData.getAll("images") as File[];
+
+        const validationErrors: typeof errors = {};
+
+        if (!title) {
+            validationErrors.title = "Title is required.";
+        }
+
+        if (!description) {
+            validationErrors.description = "Description is required.";
+        }
+
+        if (!price) {
+            validationErrors.price = "Price is required.";
+        }
+
+        if (!location) {
+            validationErrors.location = "Location is required.";
+        }
+
+        if (!category) {
+            validationErrors.category = "Category is required.";
+        }
+
+        if (!condition) {
+            validationErrors.condition = "Condition is required.";
+        }
+
+        if (
+            images.length === 0 ||
+            (images.length === 1 && images[0].size === 0)
+        ) {
+            validationErrors.images = "Please upload at least one image.";
+        }
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const imageUrls: string[] = [];
+
+            for (const image of images) {
+
+                const imageFormData = new FormData();
+
+                imageFormData.append("image", image);
+
+                const response = await fetch(
+                    `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+                    {
+                        method: "POST",
+                        body: imageFormData,
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error("Image upload failed.");
+                }
+
+                imageUrls.push(result.data.url);
+            }
+            console.log({
+                title,
+                description,
+                price: Number(price),
+                location,
+                category,
+                condition,
+                images: imageUrls,
+            });
+
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong.");
+        } finally {
+            setLoading(false);
+        }
+
+
+
+        toast.success("Validation Successful");
+    };
+
+
+
+    return (
+        <Surface className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+
+            <h2 className="text-2xl font-semibold">
+                Product Information
+            </h2>
+
+            <p className="mt-2 text-slate-500">
+                Complete all required fields below.
+            </p>
+
+            <Form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+
+                {/* Product Title */}
+                <TextField
+                    name="title"
+                    isRequired
+                    validationBehavior="aria"
+                    className="flex flex-col gap-2"
+                >
+                    <Label>Product Title</Label>
+
+                    <Input
+                        placeholder="Enter product title"
+                        variant="bordered"
+                        radius="md"
+                        size="lg"
+                    />
+
+                    {errors.title && (
+                        <p className="text-sm text-red-500">
+                            {errors.title}
+                        </p>
+                    )}
+                </TextField>
+
+                {/* Description */}
+                <div className="flex flex-col gap-2">
+
+                    <Label>Description</Label>
+
+                    <TextArea
+                        name="description"
+                        placeholder="Write a detailed description..."
+                        minRows={5}
+                        variant="bordered"
+                    />
+
+                    {errors.description && (
+                        <p className="text-sm text-red-500">
+                            {errors.description}
+                        </p>
+                    )}
+
+                </div>
+
+                {/* Price */}
+
+                <div className="">
+
+                    <TextField
+                        name="price"
+                        isRequired
+                        validationBehavior="aria"
+                        className="flex flex-col gap-2"
+                    >
+                        <Label>Resale Price</Label>
+
+                        <Input
+                            type="number"
+                            placeholder="Enter resale price"
+                            variant="bordered"
+                        />
+
+                        {errors.price && (
+                            <p className="text-sm text-red-500">
+                                {errors.price}
+                            </p>
+                        )}
+                    </TextField>
+
+                </div>
+
+                {/* Location */}
+
+                <TextField
+                    name="location"
+                    isRequired
+                    validationBehavior="aria"
+                    className="flex flex-col gap-2"
+                >
+                    <Label>Location</Label>
+
+                    <Input
+                        placeholder="Enter location"
+                        variant="bordered"
+                    />
+
+                    {errors.location && (
+                        <p className="text-sm text-red-500">
+                            {errors.location}
+                        </p>
+                    )}
+                </TextField>
+
+                <Select
+                    name="category"
+                    isRequired
+                    className="w-full"
+                    placeholder="Select Category"
+                >
+                    <Label>Category</Label>
+
+                    <Select.Trigger>
+                        <Select.Value />
+                        <Select.Indicator />
+                    </Select.Trigger>
+
+                    <Select.Popover>
+                        <ListBox>
+
+                            <ListBox.Item id="electronics" textValue="Electronics">
+                                Electronics
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="fashion" textValue="Fashion">
+                                Fashion
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="books" textValue="Books">
+                                Books
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="sports" textValue="Sports">
+                                Sports
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="home-appliances" textValue="Home Appliances">
+                                Home Appliances
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="furniture" textValue="Furniture">
+                                Furniture
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                        </ListBox>
+                    </Select.Popover>
+
+                    {errors.category && (
+                        <p className="text-sm text-red-500">
+                            {errors.category}
+                        </p>
+                    )}
+                </Select>
+
+                <Select
+                    name="condition"
+                    isRequired
+                    className="w-full"
+                    placeholder="Select Condition"
+                >
+                    <Label>Condition</Label>
+
+                    <Select.Trigger>
+                        <Select.Value />
+                        <Select.Indicator />
+                    </Select.Trigger>
+
+                    <Select.Popover>
+                        <ListBox>
+
+                            <ListBox.Item id="new" textValue="New">
+                                New
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="like-new" textValue="Like New">
+                                Like New
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="good" textValue="Good">
+                                Good
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                            <ListBox.Item id="used" textValue="Used">
+                                Used
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+
+                        </ListBox>
+                    </Select.Popover>
+
+                    {errors.condition && (
+                        <p className="text-sm text-red-500">
+                            {errors.condition}
+                        </p>
+                    )}
+                </Select>
+
+                <div className="space-y-3">
+
+                    <Label>Product Images</Label>
+
+                    <input
+                        type="file"
+                        name="images"
+                        multiple
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="block w-full text-sm text-slate-500
+        file:mr-4
+        file:rounded-md
+        file:border-0
+        file:bg-slate-100
+        file:px-4
+        file:py-2
+        file:text-sm
+        file:font-semibold
+        file:text-slate-700
+        hover:file:bg-slate-200"
+                    />
+
+                    <p className="text-xs text-slate-500">
+                        Upload up to 4 images.
+                    </p>
+
+                    {
+                        previewImages.length > 0 && (
+
+                            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+
+                                {previewImages.map((image, index) => (
+
+                                    <div
+                                        key={index}
+                                        className="relative h-36 overflow-hidden rounded-xl border border-slate-200"
+                                    >
+
+                                        <img
+                                            src={image}
+                                            alt={`Preview ${index + 1}`}
+                                            className="h-full w-full object-cover"
+                                        />
+
+                                    </div>
+
+                                ))}
+
+                            </div>
+
+                        )
+                    }
+
+                    {errors.images && (
+                        <p className="text-sm text-red-500">
+                            {errors.images}
+                        </p>
+                    )}
+
+                </div>
+
+            </Form>
+
+        </Surface>
+    );
+}
