@@ -20,7 +20,7 @@ const Navbar = () => {
         ? [
             { label: "Home", href: "/" },
             { label: "Explore", href: "/explore" },
-            { label: "Add Item", href: "/add-item" },
+            { label: "Add Item", href: "/items/add" },
             { label: "Manage Items", href: "/items/manage" },
             { label: "About", href: "/about" },
             { label: "Contact", href: "/contact" },

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ManageItemCard from "./ManageItemCard";
 import toast from "react-hot-toast";
 import { AlertDialog, Button } from "@heroui/react";
+import ManageItemSkeletonGrid from "./ManageItemsSkeletonGrid";
 
 
 interface Product {
@@ -120,9 +121,7 @@ export default function ManageItems() {
 
                 {/* Loading */}
                 {loading && (
-                    <p className="text-center text-slate-500">
-                        Loading...
-                    </p>
+                    <ManageItemSkeletonGrid count={products.length || 8} />
                 )}
 
                 {/* Empty State */}
