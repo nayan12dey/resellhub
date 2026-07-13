@@ -101,7 +101,7 @@ const ProfileDropdown = ({ user, }: ProfileDropdownProps) => {
             onClick={() => setOpen(false)}
           >
             <MdOutlineInventory2 className="text-lg text-gray-400" />
-            My Listings
+            Manage Items
           </Link>
 
           <div className="border-t border-gray-100 my-1"></div>

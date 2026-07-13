@@ -21,7 +21,7 @@ const Navbar = () => {
             { label: "Home", href: "/" },
             { label: "Explore", href: "/explore" },
             { label: "Add Item", href: "/add-item" },
-            { label: "My Listings", href: "/my-listings" },
+            { label: "Manage Items", href: "/items/manage" },
             { label: "About", href: "/about" },
             { label: "Contact", href: "/contact" },
         ]
