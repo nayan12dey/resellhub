@@ -16,26 +16,66 @@ interface Product {
   images: string[];
 }
 
-const ProductGrid = () => {
+interface ProductGridProps {
+  search: string;
+  category: string;
+  condition: string;
+  sort: string;
+}
+
+const ProductGrid = ({ search, category, condition, sort, }: ProductGridProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
     const fetchProducts = async () => {
+
+      setLoading(true);
+
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+
+        const params = new URLSearchParams();
+
+        if (search) {
+          params.append("search", search);
+        }
+
+        if (category) {
+          params.append("category", category);
+        }
+
+        if (condition) {
+          params.append("condition", condition);
+        }
+
+        if (sort) {
+          params.append("sort", sort);
+        }
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products?${params.toString()}`
+        );
+
         const data = await res.json();
 
         setProducts(data);
+
       } catch (error) {
-        console.error("Failed to fetch products:", error);
+
+        console.error(error);
+
       } finally {
+
         setLoading(false);
+
       }
+
     };
 
     fetchProducts();
-  }, []);
+
+  }, [search, category, condition, sort]);
 
   if (loading) {
     return <SkeletonGrid count={12} />;
