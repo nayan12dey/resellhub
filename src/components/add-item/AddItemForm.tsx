@@ -18,10 +18,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AddItemForm() {
+    const { data: session } = authClient.useSession();
 
     const [loading, setLoading] = useState(false);
 
-    const { data: session } = authClient.getSession();
 
     const [previewImages, setPreviewImages] = useState<string[]>([]);
 
@@ -56,6 +56,8 @@ export default function AddItemForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const form = e.currentTarget;
 
         setErrors({});
 
@@ -180,11 +182,15 @@ export default function AddItemForm() {
 
             toast.success("Product Added Successfully");
 
-            e.currentTarget.reset();
+            form.reset();
             setPreviewImages([]);
 
         } catch (error) {
             console.error(error);
+
+            if (error instanceof Error) {
+                console.log(error.message);
+            }
             toast.error("Something went wrong.");
         } finally {
             setLoading(false);
@@ -315,32 +321,32 @@ export default function AddItemForm() {
                     <Select.Popover>
                         <ListBox>
 
-                            <ListBox.Item id="electronics" textValue="Electronics">
+                            <ListBox.Item id="Electronics" textValue="Electronics">
                                 Electronics
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="fashion" textValue="Fashion">
+                            <ListBox.Item id="Fashion" textValue="Fashion">
                                 Fashion
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="books" textValue="Books">
+                            <ListBox.Item id="Books" textValue="Books">
                                 Books
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="sports" textValue="Sports">
+                            <ListBox.Item id="Sports" textValue="Sports">
                                 Sports
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="home-appliances" textValue="Home Appliances">
+                            <ListBox.Item id="Home Appliances" textValue="Home Appliances">
                                 Home Appliances
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="furniture" textValue="Furniture">
+                            <ListBox.Item id="Furniture" textValue="Furniture">
                                 Furniture
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
@@ -371,22 +377,22 @@ export default function AddItemForm() {
                     <Select.Popover>
                         <ListBox>
 
-                            <ListBox.Item id="new" textValue="New">
+                            <ListBox.Item id="New" textValue="New">
                                 New
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="like-new" textValue="Like New">
+                            <ListBox.Item id="Like New" textValue="Like New">
                                 Like New
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="good" textValue="Good">
+                            <ListBox.Item id="Good" textValue="Good">
                                 Good
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
 
-                            <ListBox.Item id="used" textValue="Used">
+                            <ListBox.Item id="Used" textValue="Used">
                                 Used
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
