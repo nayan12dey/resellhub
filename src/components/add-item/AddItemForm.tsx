@@ -114,6 +114,9 @@ export default function AddItemForm() {
         setLoading(true);
 
         try {
+            const { data: token } = await authClient.token();
+
+
             const imageUrls: string[] = [];
 
             for (const image of images) {
@@ -163,18 +166,19 @@ export default function AddItemForm() {
                 reviews: 0,
             };
 
-            const response = await fetch(
+            const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/products`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${token?.token}`,
                     },
                     body: JSON.stringify(productData),
                 }
             );
 
-            const result = await response.json();
+            const result = await res.json();
 
             if (!result.success) {
                 throw new Error("Failed to add product");
