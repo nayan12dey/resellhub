@@ -2,36 +2,14 @@ import Link from "next/link";
 import ProductCard from "../shared/ProductCard";
 import Container from "../shared/Container";
 import { FiArrowRight } from "react-icons/fi";
+import { Suspense } from "react";
+import LatestListingGrid from "./LatestListingGrid";
+import LatestListingSkeleton from "./LatestListingSkeleton";
 
 
-interface Product {
-    _id: string;
-    title: string;
-    description: string;
-    category: string;
-    price: number;
-    originalPrice: number;
-    condition: string;
-    location: string;
-    images: string[];
-    seller: {
-        name: string;
-        email: string;
-    };
-    postedDate: string;
-}
 
 const LatestListings = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-   
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products?limit=8`,
-        {
-            cache: "no-store",
-        }
-    );
 
-    const products: Product[] = await res.json();
 
 
 
@@ -52,6 +30,7 @@ const LatestListings = async () => {
                         </p>
                     </div>
 
+
                     <div>
                         <Link
                             href="/explore"
@@ -63,9 +42,14 @@ const LatestListings = async () => {
                     </div>
                 </div>
 
+
+                <Suspense fallback={<LatestListingSkeleton />}>
+                    <LatestListingGrid />
+                </Suspense>
+
                 {/* Product Cards Grid with smooth zoom/hover transitions */}
 
-                <div className="grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
+                {/* <div className="grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
                     {products.map((item) => (
                         <div
                             key={item._id}
@@ -83,7 +67,7 @@ const LatestListings = async () => {
                             />
                         </div>
                     ))}
-                </div>
+                </div> */}
             </Container>
         </section>
     );
