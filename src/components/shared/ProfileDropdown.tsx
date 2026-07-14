@@ -8,6 +8,7 @@ import { HiOutlinePlusCircle } from "react-icons/hi";
 import { MdOutlineInventory2 } from "react-icons/md";
 import { authClient } from "@/app/lib/auth-client";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 
 interface ProfileDropdownProps {
@@ -21,6 +22,8 @@ interface ProfileDropdownProps {
 const ProfileDropdown = ({ user, }: ProfileDropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -42,10 +45,10 @@ const ProfileDropdown = ({ user, }: ProfileDropdownProps) => {
 
   const handleLogout = async () => {
     await authClient.signOut();
-
     toast.success("Logged out successfully");
-
     setOpen(false);
+    router.replace("/login");
+
   };
 
   return (
