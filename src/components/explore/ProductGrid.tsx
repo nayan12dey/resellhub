@@ -21,13 +21,24 @@ interface ProductGridProps {
   category: string;
   condition: string;
   sort: string;
+  page: number;
+  setTotalPages: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProductGrid = ({ search, category, condition, sort, }: ProductGridProps) => {
+
+const ProductGrid = ({
+  search,
+  category,
+  condition,
+  sort,
+  page,
+  setTotalPages,
+}: ProductGridProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
 
     const fetchProducts = async () => {
 
@@ -53,13 +64,23 @@ const ProductGrid = ({ search, category, condition, sort, }: ProductGridProps) =
           params.append("sort", sort);
         }
 
+        params.append("page", page.toString());
+        params.append("limit", "8");
+
+
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/products?${params.toString()}`
         );
 
+        // const data = await res.json();
+
+        // setProducts(data);
+
         const data = await res.json();
 
-        setProducts(data);
+        setProducts(data.products);
+
+        setTotalPages(data.totalPages);
 
       } catch (error) {
 
@@ -75,7 +96,7 @@ const ProductGrid = ({ search, category, condition, sort, }: ProductGridProps) =
 
     fetchProducts();
 
-  }, [search, category, condition, sort]);
+  },  [search, category, condition, sort, page]);
 
   if (loading) {
     return <SkeletonGrid count={12} />;

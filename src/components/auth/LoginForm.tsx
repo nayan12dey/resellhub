@@ -140,9 +140,9 @@ export default function LoginForm() {
                             name="email"
                             type="email"
                             placeholder="Enter your email"
-                            variant="bordered"
-                            radius="md"
-                            size="lg"
+                            // variant="bordered"
+                            // radius="md"
+                            // size="lg"
                             autoComplete="email"
                         />
 
@@ -173,9 +173,9 @@ export default function LoginForm() {
                                         : "password"
                                 }
                                 placeholder="Enter your password"
-                                variant="bordered"
-                                radius="md"
-                                size="lg"
+                                // variant="bordered"
+                                // radius="md"
+                                // size="lg"
                                 autoComplete="current-password"
                                 className="w-full"
                             />
@@ -207,11 +207,14 @@ export default function LoginForm() {
                     {/* Login Button */}
                     <Button
                         type="submit"
-                        color="primary"
-                        radius="md"
+                        // color="primary"
+                        // radius="md"
                         className="h-12 w-full text-base font-semibold tracking-wide shadow-sm"
-                        isLoading={loading}
+                    // isLoading={loading}
                     >
+                        {loading && (
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        )}
                         {loading ? "Signing In..." : "Sign In"}
                     </Button>
 
@@ -231,8 +234,8 @@ export default function LoginForm() {
                     {/* Google Login */}
                     <Button
                         type="button"
-                        variant="bordered"
-                        radius="md"
+                        // variant="bordered"
+                        // radius="md"
                         className="h-12 w-full bg-blue-50 font-medium text-slate-700 transition-colors hover:bg-blue-100"
                         onPress={handleGoogleLogin}
                     >

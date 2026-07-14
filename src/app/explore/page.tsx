@@ -4,7 +4,7 @@ import FilterBar from "@/components/explore/FilterBar";
 import ProductGrid from "@/components/explore/ProductGrid";
 import Pagination from "@/components/explore/Pagination";
 import Container from "@/components/shared/Container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { useState } from "react";
 
 const ExplorePage = () => {
@@ -16,6 +16,14 @@ const ExplorePage = () => {
   const [condition, setCondition] = useState("");
 
   const [sort, setSort] = useState("newest");
+
+  const [page, setPage] = useState(1);
+
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    setPage(1);
+  }, [search, category, condition, sort]);
 
   return (
     <div className="min-h-screen bg-slate-50/50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0))]">
@@ -56,12 +64,19 @@ const ExplorePage = () => {
             <ProductGrid search={search}
               category={category}
               condition={condition}
-              sort={sort} />
+              sort={sort}
+              page={page}
+              setTotalPages={setTotalPages}
+            />
           </div>
 
           {/* Pagination Section */}
           <div className="pt-8 border-t border-slate-100 flex justify-center">
-            <Pagination />
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              setPage={setPage}
+            />
           </div>
 
         </section>

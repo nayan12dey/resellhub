@@ -210,9 +210,9 @@ export default function SignupForm() {
                         <Label className="text-sm font-medium text-slate-700">Full Name</Label>
                         <Input
                             placeholder="Enter your full name"
-                            variant="bordered"
-                            radius="md"
-                            size="lg"
+                            // variant="bordered"
+                            // radius="md"
+                            // size="lg"
                             className="w-full"
                         />
                         {errors.name && (
@@ -233,9 +233,9 @@ export default function SignupForm() {
                         <Label className="text-sm font-medium text-slate-700">Email Address</Label>
                         <Input
                             placeholder="Enter your email"
-                            variant="bordered"
-                            radius="md"
-                            size="lg"
+                            // variant="bordered"
+                            // radius="md"
+                            // size="lg"
                             className="w-full"
                         />
                         {errors.email && (
@@ -291,19 +291,19 @@ export default function SignupForm() {
                         {/* relative wrapper  */}
                         <div className="relative w-full flex items-center">
                             <Input
-                                name="password" 
+                                name="password"
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter your password"
-                                variant="bordered"
-                                radius="md"
-                                size="lg"
+                                // variant="bordered"
+                                // radius="md"
+                                // size="lg"
                                 className="w-full"
                             />
 
                             <button
                                 type="button"
                                 onClick={(e) => {
-                                    e.preventDefault(); 
+                                    e.preventDefault();
                                     setShowPassword((prev) => !prev);
                                 }}
                                 className="absolute right-4 focus:outline-none z-50 cursor-pointer p-1 text-slate-400 hover:text-slate-600 transition-colors"
@@ -370,54 +370,57 @@ export default function SignupForm() {
 
 
 
-                {/* Register Button (Rectangle Type - radius="none" or "md") */}
-                <Button
-                    type="submit"
-                    color="primary"
-                    radius="md"
-                    className="w-full h-12 text-base font-semibold shadow-sm tracking-wide"
-                    isLoading={loading}
-                >
-                    {loading ? "Creating Account..." : "Create Account"}
-                </Button>
-
-                {/* Divider */}
-                <div className="relative w-full py-2">
-                    <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-slate-200" />
-                    </div>
-                    <div className="relative flex justify-center">
-                        <span className="bg-white px-3 text-xs uppercase tracking-wider text-slate-400 font-medium">
-                            OR
-                        </span>
-                    </div>
-                </div>
-
-                {/* Google Signup (Rectangle Type - radius="md") */}
-                <Button
-                    type="button"
-                    variant="bordered"
-                    radius="md"
-                    className="w-full h-12 font-medium bg-blue-50 text-slate-700 hover:bg-blue-100 transition-colors"
-                    onPress={handleGoogleSignup}
-                >
-                    <FcGoogle className="mr-2 text-xl" />
-                    Continue with Google
-                </Button>
-
-                {/* Login Link */}
-                <p className="text-center text-sm text-slate-600 mt-2">
-                    Already have an account?{" "}
-                    <Link
-                        href="/login"
-                        className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-all"
+                    {/* Register Button (Rectangle Type - radius="none" or "md") */}
+                    <Button
+                        type="submit"
+                        // color="primary"
+                        // radius="md"
+                        className="w-full h-12 text-base font-semibold shadow-sm tracking-wide"
+                    // isLoading={loading}
                     >
-                        Sign In
-                    </Link>
-                </p>
+                        {loading && (
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        )}
+                        {loading ? "Creating Account..." : "Create Account"}
+                    </Button>
 
-            </Form>
-        </Surface>
+                    {/* Divider */}
+                    <div className="relative w-full py-2">
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-slate-200" />
+                        </div>
+                        <div className="relative flex justify-center">
+                            <span className="bg-white px-3 text-xs uppercase tracking-wider text-slate-400 font-medium">
+                                OR
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Google Signup (Rectangle Type - radius="md") */}
+                    <Button
+                        type="button"
+                        // variant="bordered"
+                        // radius="md"
+                        className="w-full h-12 font-medium bg-blue-50 text-slate-700 hover:bg-blue-100 transition-colors"
+                        onPress={handleGoogleSignup}
+                    >
+                        <FcGoogle className="mr-2 text-xl" />
+                        Continue with Google
+                    </Button>
+
+                    {/* Login Link */}
+                    <p className="text-center text-sm text-slate-600 mt-2">
+                        Already have an account?{" "}
+                        <Link
+                            href="/login"
+                            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-all"
+                        >
+                            Sign In
+                        </Link>
+                    </p>
+
+                </Form>
+            </Surface>
         </div >
     );
 }

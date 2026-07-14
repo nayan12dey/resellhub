@@ -228,9 +228,9 @@ export default function AddItemForm() {
 
                     <Input
                         placeholder="Enter product title"
-                        variant="bordered"
-                        radius="md"
-                        size="lg"
+                        variant="primary"
+                    // radius="md"
+                    // size="lg"
                     />
 
                     {errors.title && (
@@ -248,8 +248,8 @@ export default function AddItemForm() {
                     <TextArea
                         name="description"
                         placeholder="Write a detailed description..."
-                        minRows={5}
-                        variant="bordered"
+                    // minRows={5}
+                    // variant="bordered"
                     />
 
                     {errors.description && (
@@ -275,7 +275,7 @@ export default function AddItemForm() {
                         <Input
                             type="number"
                             placeholder="Enter resale price"
-                            variant="bordered"
+                        // variant="bordered"
                         />
 
                         {errors.price && (
@@ -299,7 +299,7 @@ export default function AddItemForm() {
 
                     <Input
                         placeholder="Enter location"
-                        variant="bordered"
+                    // variant="bordered"
                     />
 
                     {errors.location && (
@@ -476,13 +476,24 @@ export default function AddItemForm() {
 
                 </div>
 
-                <Button
+                {/* <Button
                     type="submit"
-                    color="primary"
-                    radius="md"
+                    // color="primary"
+                    // radius="md"
                     className="w-full h-12 text-base font-semibold"
                     isLoading={loading}
                 >
+                    {loading ? "Adding Product..." : "Add Product"}
+                </Button> */}
+
+                <Button
+                    type="submit"
+                    className="w-full h-12 text-base font-semibold bg-primary text-primary-foreground rounded-md data-[hovering]:opacity-90 flex items-center justify-center gap-2"
+                    // disabled={loading}
+                >
+                    {loading && (
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    )}
                     {loading ? "Adding Product..." : "Add Product"}
                 </Button>
 
