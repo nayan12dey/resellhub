@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "@/app/lib/auth-client";
+import { authClient, useSession } from "@/app/lib/auth-client";
 import { useEffect, useState } from "react";
 import ManageItemCard from "./ManageItemCard";
 import toast from "react-hot-toast";
@@ -36,18 +36,24 @@ export default function ManageItems() {
 
             if (!session?.user?.email) return;
 
+            const { data: token } = await authClient.token();
+
             try {
 
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/products/user/${session?.user?.email}`
-                );
+                    `${process.env.NEXT_PUBLIC_API_URL}/products/user/${session?.user?.email}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token?.token}`,
+                        },
+                    }
+                )
 
                 const data = await res.json();
 
                 setProducts(data);
 
             } catch (error) {
-
                 console.error(error);
 
             } finally {
@@ -64,7 +70,10 @@ export default function ManageItems() {
 
     console.log(products);
 
+
     const confirmDelete = async () => {
+
+        const { data: token } = await authClient.token();
 
         if (!deleteId) return;
 
@@ -74,6 +83,9 @@ export default function ManageItems() {
                 `${process.env.NEXT_PUBLIC_API_URL}/products/${deleteId}`,
                 {
                     method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token?.token}`,
+                    },
                 }
             );
 
@@ -207,7 +219,7 @@ export default function ManageItems() {
             </AlertDialog>
 
 
-            
+
 
         </section>
 
