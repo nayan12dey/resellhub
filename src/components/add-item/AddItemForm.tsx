@@ -115,6 +115,8 @@ export default function AddItemForm() {
 
         try {
             const { data: token } = await authClient.token();
+            console.log("TOKEN =", token);
+            console.log("JWT =", token?.token);
 
 
             const imageUrls: string[] = [];
@@ -489,7 +491,7 @@ export default function AddItemForm() {
                 <Button
                     type="submit"
                     className="w-full h-12 text-base font-semibold bg-primary text-primary-foreground rounded-md data-[hovering]:opacity-90 flex items-center justify-center gap-2"
-                    // disabled={loading}
+                // disabled={loading}
                 >
                     {loading && (
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
