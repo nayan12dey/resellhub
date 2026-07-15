@@ -125,8 +125,8 @@ const Footer = () => {
 
                         <ul className="space-y-3 text-gray-400">
                             <li>📧 support@resellhub.com</li>
-                            <li>📞 +91 98765 43210</li>
-                            <li>📍 Kolkata, India</li>
+                            <li>📞+1 (555) 019-2834</li>
+                            <li>📍 San Francisco, USA</li>
                         </ul>
                     </div>
                 </div>

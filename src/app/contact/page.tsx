@@ -35,7 +35,7 @@ export default function ContactPage() {
 
                 {/* Phone Card */}
                 <a
-                    href="tel:+91XXXXXXXXXX"
+                    href="tel: +1 (555) 019-2834"
                     className="group bg-white border border-slate-200 hover:border-blue-500 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between min-h-[160px]"
                 >
                     <div>
@@ -43,7 +43,7 @@ export default function ContactPage() {
                             <Phone size={20} />
                         </div>
                         <h3 className="text-base font-bold text-slate-800 mt-4">Call Us</h3>
-                        <p className="text-sm text-slate-500 mt-1">+91  98765 43210</p>
+                        <p className="text-sm text-slate-500 mt-1">+1 (555) 019-2834</p>
                     </div>
                     <div className="flex items-center gap-1 text-xs font-semibold text-blue-600 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                         Call Now <ExternalLink size={12} />
@@ -59,7 +59,7 @@ export default function ContactPage() {
                             <MapPin size={20} />
                         </div>
                         <h3 className="text-base font-bold text-slate-800 mt-4">Location</h3>
-                        <p className="text-sm text-slate-500 mt-1">Kolkata, India</p>
+                        <p className="text-sm text-slate-500 mt-1">San Francisco, USA</p>
                     </div>
                     <div className="text-xs font-medium text-slate-400 mt-4">
                         Standard Support Hours
