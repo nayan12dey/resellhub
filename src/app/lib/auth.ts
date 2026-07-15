@@ -14,7 +14,14 @@ export const auth = betterAuth({
 
     emailAndPassword: {
         enabled: true,
-        // autoSignIn: false
+        autoSignIn: false
+    },
+
+    socialProviders: {
+        google: {
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        },
     },
 
     session: {
@@ -29,5 +36,5 @@ export const auth = betterAuth({
         jwt()
     ]
 
-    
+
 });
