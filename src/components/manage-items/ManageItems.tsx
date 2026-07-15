@@ -37,6 +37,7 @@ export default function ManageItems() {
             if (!session?.user?.email) return;
 
             const { data: token } = await authClient.token();
+            console.log(token?.token)
 
             try {
 
