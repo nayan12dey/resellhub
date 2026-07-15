@@ -21,32 +21,32 @@ import { useEffect, useState } from "react";
 //     { category: "Books", listings: 60 },
 // ];
 
-const stats = [
-    {
-        number: "3,200+",
-        label: "Active Listings",
-        icon: ShoppingBag,
-        color: "text-blue-600 bg-blue-50 border-blue-100",
-    },
-    {
-        number: "1,500+",
-        label: "Happy Users",
-        icon: Users,
-        color: "text-emerald-600 bg-emerald-50 border-emerald-100",
-    },
-    {
-        number: "780+",
-        label: "Products Sold",
-        icon: CheckCircle,
-        color: "text-indigo-600 bg-indigo-50 border-indigo-100",
-    },
-    {
-        number: "85+",
-        label: "Cities Covered",
-        icon: MapPin,
-        color: "text-rose-600 bg-rose-50 border-rose-100",
-    },
-];
+// const stats = [
+//     {
+//         number: "3,200+",
+//         label: "Active Listings",
+//         icon: ShoppingBag,
+//         color: "text-blue-600 bg-blue-50 border-blue-100",
+//     },
+//     {
+//         number: "1,500+",
+//         label: "Happy Users",
+//         icon: Users,
+//         color: "text-emerald-600 bg-emerald-50 border-emerald-100",
+//     },
+//     {
+//         number: "780+",
+//         label: "Products Sold",
+//         icon: CheckCircle,
+//         color: "text-indigo-600 bg-indigo-50 border-indigo-100",
+//     },
+//     {
+//         number: "85+",
+//         label: "Cities Covered",
+//         icon: MapPin,
+//         color: "text-rose-600 bg-rose-50 border-rose-100",
+//     },
+// ];
 
 const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -113,7 +113,7 @@ const MarketplaceStatistics = () => {
                     </div>
 
                     {/* Statistics Cards */}
-                    <div className="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {/* <div className="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {stats.map((item) => {
                             const Icon = item.icon;
                             return (
@@ -136,7 +136,7 @@ const MarketplaceStatistics = () => {
                                 </div>
                             );
                         })}
-                    </div>
+                    </div> */}
 
                     {/* Chart Wrapper */}
                     <div className="rounded-3xl border border-gray-100 bg-white p-6 md:p-10 shadow-sm">
